@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a4460665d6eec4186812c05cb77df4, type: 3}
+  m_Name: SevenOfDiamonds
+  m_EditorClassIdentifier: 
+  cardId: 30
+  cardName: Seven Of Diamonds
+  icon: {fileID: 0}
+  cardType: 0
+  cardSuit: 2
+  cardPip: 6
+  isVisible: 0
