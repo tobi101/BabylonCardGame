@@ -5,7 +5,7 @@ using UnityEngine;
 public class CardManager : Singleton<CardManager>
 {
     public List<CardTemplate> cardTemplates = new();
-    public CardTemplate joker = null;
+    public CardTemplate joker;
 
     public List<GameObject> bottomPositions = new();
     public List<GameObject> horizontalPositions = new();
@@ -17,17 +17,17 @@ public class CardManager : Singleton<CardManager>
     // Start is called before the first frame update
     void Start()
     {
-        // joker = GetComponent<CardTemplate>();
         CardShuffle(cardTemplates);
-        cardTemplates.Insert(Random.Range(0, 4), joker);
+        cardTemplates.Insert(Random.Range(0, 3), joker);
 
         foreach (var card in cardTemplates)
         {
             cards.Add(Card.CreateCard(card));
         }
 
-        for (int i = 0; i < bottomPositions.Count-1; i++)
+        for (int i = 0; i < bottomPositions.Count; i++)
         {
+            bottomPositions[i].AddComponent<Card>().template = cards[i].template;
         }
 
         
