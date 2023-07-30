@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CardManager : Singleton<CardManager>
@@ -18,19 +19,52 @@ public class CardManager : Singleton<CardManager>
     void Start()
     {
         CardShuffle(cardTemplates);
-        cardTemplates.Insert(Random.Range(0, 3), joker);
+        cardTemplates.Insert(Random.Range(0, 4), joker);
 
-        foreach (var card in cardTemplates)
+        for (int i = 0; i < cardTemplates.Count; i++)
         {
-            cards.Add(Card.CreateCard(card));
+            cards.Add(Card.CreateCard(cardTemplates[i]));
         }
 
         for (int i = 0; i < bottomPositions.Count; i++)
         {
             bottomPositions[i].AddComponent<Card>().template = cards[i].template;
+            if (cards[i].template.cardType == CardTemplate.CardType.Joker)
+            {
+                bottomPositions[i].GetComponentInChildren<TMP_Text>().text = cards[i].template.cardType.ToString();
+            }
+            else
+            {
+                bottomPositions[i].GetComponentInChildren<TMP_Text>().text = cards[i].template.cardPip.ToString() + "\n" + cards[i].template.cardSuit.ToString();
+            }
         }
 
-        
+        for (int i = 0; i < horizontalPositions.Count; i++)
+        {
+            horizontalPositions[i].AddComponent<Card>().template = cards[i + bottomPositions.Count].template;
+            horizontalPositions[i].GetComponentInChildren<TMP_Text>().text = 
+                cards[i + bottomPositions.Count].template.cardPip.ToString() + 
+                "\n" + 
+                cards[i + bottomPositions.Count].template.cardSuit.ToString();
+        }
+
+        for (int i = 0; i < verticalVisiblePositions.Count; i++)
+        {
+            verticalVisiblePositions[i].AddComponent<Card>().template = cards[i + bottomPositions.Count + horizontalPositions.Count].template;
+            verticalVisiblePositions[i].GetComponentInChildren<TMP_Text>().text =
+                cards[i + bottomPositions.Count + horizontalPositions.Count].template.cardPip.ToString() +
+                "\n" +
+                cards[i + bottomPositions.Count + horizontalPositions.Count].template.cardSuit.ToString();
+        }
+
+        for (int i = 0; i < verticalInvisiblePositions.Count; i++)
+        {
+            verticalInvisiblePositions[i].AddComponent<Card>().template = cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template;
+            verticalInvisiblePositions[i].GetComponentInChildren<TMP_Text>().text =
+                cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template.cardPip.ToString() +
+                "\n" +
+                cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template.cardSuit.ToString();
+        }
     }
 
     void CardShuffle<T>(List<T> inputList)
