@@ -15,8 +15,6 @@ public class CardTemplate : ScriptableObject
     public CardPip cardPip;
 
     public Texture2D cardTexture;
-
-    public bool isVisible = false;
     
     public enum CardType
     {

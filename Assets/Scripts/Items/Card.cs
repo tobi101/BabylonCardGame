@@ -7,6 +7,8 @@ public class Card : MonoBehaviour
 {
     public CardTemplate template;
 
+    public bool isVisible = true;
+
     public Card(CardTemplate template)
     {
         this.template = template;

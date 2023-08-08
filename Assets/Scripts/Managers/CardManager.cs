@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CardManager : Singleton<CardManager>
 {
@@ -12,6 +14,8 @@ public class CardManager : Singleton<CardManager>
     public List<GameObject> horizontalPositions = new();
     public List<GameObject> verticalVisiblePositions = new();
     public List<GameObject> verticalInvisiblePositions = new();
+
+    public List<GameObject> selectedCard = null;
 
     private List<Card> cards = new();
 
@@ -42,9 +46,9 @@ public class CardManager : Singleton<CardManager>
         for (int i = 0; i < horizontalPositions.Count; i++)
         {
             horizontalPositions[i].AddComponent<Card>().template = cards[i + bottomPositions.Count].template;
-            horizontalPositions[i].GetComponentInChildren<TMP_Text>().text = 
-                cards[i + bottomPositions.Count].template.cardPip.ToString() + 
-                "\n" + 
+            horizontalPositions[i].GetComponentInChildren<TMP_Text>().text =
+                cards[i + bottomPositions.Count].template.cardPip.ToString() +
+                "\n" +
                 cards[i + bottomPositions.Count].template.cardSuit.ToString();
         }
 
@@ -64,6 +68,42 @@ public class CardManager : Singleton<CardManager>
                 cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template.cardPip.ToString() +
                 "\n" +
                 cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template.cardSuit.ToString();
+
+            cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].isVisible = false;
+        }
+    }
+
+    private void Update()
+    {
+        // Проверяем клик левой кнопкой мыши
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Создаем луч из точки клика мыши
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            // Проверяем, попал ли луч в какой-либо объект
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (CardManager.instance.selectedCard.Count < 2)
+                {
+                    if (hit.collider.gameObject.GetComponent<Card>().isVisible)
+                    {
+                        selectedCard.Add(hit.collider.gameObject);
+                        Debug.Log("Added" + hit.collider.gameObject.name);
+                    }
+                }
+            }
+        }
+
+        if (CardManager.instance.selectedCard.Count == 2)
+        {
+            if (CardManager.instance.selectedCard[0].GetComponent<Card>().template.cardPip == 
+                CardManager.instance.selectedCard[1].GetComponent<Card>().template.cardPip)
+            {
+                Destroy(CardManager.instance.selectedCard[0]);
+                Destroy(CardManager.instance.selectedCard[1]);
+            }
         }
     }
 
