@@ -41,6 +41,8 @@ public class CardManager : Singleton<CardManager>
             {
                 bottomPositions[i].GetComponentInChildren<TMP_Text>().text = cards[i].template.cardPip.ToString() + "\n" + cards[i].template.cardSuit.ToString();
             }
+
+            bottomPositions[i].GetComponent<Card>().isVisible = true;
         }
 
         for (int i = 0; i < horizontalPositions.Count; i++)
@@ -50,6 +52,8 @@ public class CardManager : Singleton<CardManager>
                 cards[i + bottomPositions.Count].template.cardPip.ToString() +
                 "\n" +
                 cards[i + bottomPositions.Count].template.cardSuit.ToString();
+
+            horizontalPositions[i].GetComponent<Card>().isVisible = true;
         }
 
         for (int i = 0; i < verticalVisiblePositions.Count; i++)
@@ -59,6 +63,8 @@ public class CardManager : Singleton<CardManager>
                 cards[i + bottomPositions.Count + horizontalPositions.Count].template.cardPip.ToString() +
                 "\n" +
                 cards[i + bottomPositions.Count + horizontalPositions.Count].template.cardSuit.ToString();
+
+            verticalVisiblePositions[i].GetComponent<Card>().isVisible = true;
         }
 
         for (int i = 0; i < verticalInvisiblePositions.Count; i++)
@@ -69,7 +75,7 @@ public class CardManager : Singleton<CardManager>
                 "\n" +
                 cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template.cardSuit.ToString();
 
-            cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].isVisible = false;
+            verticalInvisiblePositions[i].GetComponent<Card>().isVisible = false;
         }
     }
 
@@ -101,8 +107,7 @@ public class CardManager : Singleton<CardManager>
             if (CardManager.instance.selectedCard[0].GetComponent<Card>().template.cardPip == 
                 CardManager.instance.selectedCard[1].GetComponent<Card>().template.cardPip)
             {
-                Destroy(CardManager.instance.selectedCard[0]);
-                Destroy(CardManager.instance.selectedCard[1]);
+
             }
         }
     }
@@ -116,5 +121,11 @@ public class CardManager : Singleton<CardManager>
             inputList[i] = inputList[rand];
             inputList[rand] = temp;
         }
+    }
+
+    bool isAvailableToPlay(GameObject gameObject)
+    {
+
+        return false;
     }
 }
