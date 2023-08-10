@@ -107,8 +107,17 @@ public class CardManager : Singleton<CardManager>
             if (CardManager.instance.selectedCard[0].GetComponent<Card>().template.cardPip == 
                 CardManager.instance.selectedCard[1].GetComponent<Card>().template.cardPip)
             {
+                Destroy(CardManager.instance.selectedCard[0]);
+                Destroy(CardManager.instance.selectedCard[1]);
 
+                Debug.Log("They are equal!");
             }
+            else
+            {
+                Debug.Log("They aren't equal!");
+            }
+
+            CardManager.instance.selectedCard.Clear();
         }
     }
 
