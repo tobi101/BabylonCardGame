@@ -18,4 +18,4 @@ MonoBehaviour:
   cardType: 0
   cardSuit: 3
   cardPip: 6
-  isVisible: 0
+  cardTexture: {fileID: 2800000, guid: 01338afedab522f42861018b30803f29, type: 3}
