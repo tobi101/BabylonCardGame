@@ -112,6 +112,13 @@ public class CardManager : Singleton<CardManager>
 
                 Debug.Log("They are equal!");
             }
+            else if (
+                CardManager.instance.selectedCard[0].GetComponent<Card>().template.cardSuit ==
+                CardManager.instance.selectedCard[1].GetComponent<Card>().template.cardSuit)
+            {
+                CardManager.instance.selectedCard[0].transform.position = CardManager.instance.selectedCard[1].transform.GetChild(0).transform.position;
+                CardManager.instance.selectedCard[0].transform.rotation = CardManager.instance.selectedCard[1].transform.GetChild(0).transform.rotation;
+            }
             else
             {
                 Debug.Log("They aren't equal!");
