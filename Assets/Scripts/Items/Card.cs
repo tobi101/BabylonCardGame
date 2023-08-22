@@ -8,6 +8,7 @@ public class Card : MonoBehaviour
     public CardTemplate template;
 
     public bool isVisible = true;
+    public bool isChanged = false;
 
     public Card(CardTemplate template)
     {

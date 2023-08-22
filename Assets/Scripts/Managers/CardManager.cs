@@ -43,6 +43,7 @@ public class CardManager : Singleton<CardManager>
             }
 
             bottomPositions[i].GetComponent<Card>().isVisible = true;
+            bottomPositions[i].GetComponent<Card>().isChanged = false;
         }
 
         for (int i = 0; i < horizontalPositions.Count; i++)
@@ -54,6 +55,7 @@ public class CardManager : Singleton<CardManager>
                 cards[i + bottomPositions.Count].template.cardSuit.ToString();
 
             horizontalPositions[i].GetComponent<Card>().isVisible = true;
+            horizontalPositions[i].GetComponent<Card>().isChanged = false;
         }
 
         for (int i = 0; i < verticalVisiblePositions.Count; i++)
@@ -65,6 +67,7 @@ public class CardManager : Singleton<CardManager>
                 cards[i + bottomPositions.Count + horizontalPositions.Count].template.cardSuit.ToString();
 
             verticalVisiblePositions[i].GetComponent<Card>().isVisible = true;
+            verticalVisiblePositions[i].GetComponent<Card>().isChanged = false;
         }
 
         for (int i = 0; i < verticalInvisiblePositions.Count; i++)
@@ -76,6 +79,7 @@ public class CardManager : Singleton<CardManager>
                 cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template.cardSuit.ToString();
 
             verticalInvisiblePositions[i].GetComponent<Card>().isVisible = false;
+            verticalInvisiblePositions[i].GetComponent<Card>().isChanged = false;
         }
     }
 
@@ -118,6 +122,7 @@ public class CardManager : Singleton<CardManager>
             {
                 CardManager.instance.selectedCard[0].transform.position = CardManager.instance.selectedCard[1].transform.GetChild(0).transform.position;
                 CardManager.instance.selectedCard[0].transform.rotation = CardManager.instance.selectedCard[1].transform.GetChild(0).transform.rotation;
+                CardManager.instance.selectedCard[0].GetComponent<Card>().isChanged = true;
             }
             else
             {
