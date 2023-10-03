@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class CardManager : Singleton<CardManager>
 {
+    public Material sharedMaterial;
+
     public List<CardTemplate> cardTemplates = new();
     public CardTemplate joker;
 
@@ -17,11 +19,16 @@ public class CardManager : Singleton<CardManager>
 
     public List<GameObject> selectedCard = null;
 
+    private Renderer _objectRenderer;
+    private MaterialPropertyBlock _propertyBlock;
+
     private List<Card> cards = new();
 
     // Start is called before the first frame update
     void Start()
     {
+        _propertyBlock = new MaterialPropertyBlock();
+
         CardShuffle(cardTemplates);
         cardTemplates.Insert(Random.Range(0, 4), joker);
 
@@ -32,58 +39,67 @@ public class CardManager : Singleton<CardManager>
 
         for (int i = 0; i < bottomPositions.Count; i++)
         {
+            _objectRenderer = bottomPositions[i].GetComponent<Renderer>();
+            Material newMaterial = new Material(_objectRenderer.sharedMaterial);
+
             bottomPositions[i].AddComponent<Card>().template = cards[i].template;
-            if (cards[i].template.cardType == CardTemplate.CardType.Joker)
-            {
-                bottomPositions[i].GetComponentInChildren<TMP_Text>().text = cards[i].template.cardType.ToString();
-            }
-            else
-            {
-                bottomPositions[i].GetComponentInChildren<TMP_Text>().text = cards[i].template.cardPip.ToString() + "\n" + cards[i].template.cardSuit.ToString();
-            }
+
+            newMaterial.mainTexture = bottomPositions[i].GetComponent<Card>().template.cardTexture;
 
             bottomPositions[i].GetComponent<Card>().isVisible = true;
             bottomPositions[i].GetComponent<Card>().isChanged = false;
+
+            _objectRenderer.material = newMaterial;
+
         }
 
         for (int i = 0; i < horizontalPositions.Count; i++)
         {
+            _objectRenderer = horizontalPositions[i].GetComponent<Renderer>();
+            Material newMaterial = new Material(_objectRenderer.sharedMaterial);
+
             horizontalPositions[i].AddComponent<Card>().template = cards[i + bottomPositions.Count].template;
-            horizontalPositions[i].GetComponentInChildren<TMP_Text>().text =
-                cards[i + bottomPositions.Count].template.cardPip.ToString() +
-                "\n" +
-                cards[i + bottomPositions.Count].template.cardSuit.ToString();
+
+            newMaterial.mainTexture = horizontalPositions[i].GetComponent<Card>().template.cardTexture;
 
             horizontalPositions[i].GetComponent<Card>().isVisible = true;
             horizontalPositions[i].GetComponent<Card>().isChanged = false;
+
+            _objectRenderer.material = newMaterial;
         }
 
         for (int i = 0; i < verticalVisiblePositions.Count; i++)
         {
+            _objectRenderer = verticalVisiblePositions[i].GetComponent<Renderer>();
+            Material newMaterial = new Material(_objectRenderer.sharedMaterial);
+
             verticalVisiblePositions[i].AddComponent<Card>().template = cards[i + bottomPositions.Count + horizontalPositions.Count].template;
-            verticalVisiblePositions[i].GetComponentInChildren<TMP_Text>().text =
-                cards[i + bottomPositions.Count + horizontalPositions.Count].template.cardPip.ToString() +
-                "\n" +
-                cards[i + bottomPositions.Count + horizontalPositions.Count].template.cardSuit.ToString();
+
+            newMaterial.mainTexture = verticalVisiblePositions[i].GetComponent<Card>().template.cardTexture;
 
             verticalVisiblePositions[i].GetComponent<Card>().isVisible = true;
             verticalVisiblePositions[i].GetComponent<Card>().isChanged = false;
+
+            _objectRenderer.material = newMaterial;
         }
 
         for (int i = 0; i < verticalInvisiblePositions.Count; i++)
         {
+            _objectRenderer = verticalInvisiblePositions[i].GetComponent<Renderer>();
+            Material newMaterial = new Material(_objectRenderer.sharedMaterial);
+
             verticalInvisiblePositions[i].AddComponent<Card>().template = cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template;
-            verticalInvisiblePositions[i].GetComponentInChildren<TMP_Text>().text =
-                cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template.cardPip.ToString() +
-                "\n" +
-                cards[i + bottomPositions.Count + horizontalPositions.Count + verticalVisiblePositions.Count].template.cardSuit.ToString();
+
+            newMaterial.mainTexture = verticalInvisiblePositions[i].GetComponent<Card>().template.cardTexture;
 
             verticalInvisiblePositions[i].GetComponent<Card>().isVisible = false;
             verticalInvisiblePositions[i].GetComponent<Card>().isChanged = false;
+
+            _objectRenderer.material = newMaterial;
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // Проверяем клик левой кнопкой мыши
         if (Input.GetMouseButtonDown(0))

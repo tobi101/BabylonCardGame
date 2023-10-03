@@ -9,10 +9,13 @@ public class CardLink : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (linkedCards.All(card => card.isChanged == true) || linkedCards.Count == 0)
-        {
-            gameObject.GetComponent<Card>().isVisible = true;
-            gameObject.transform.rotation = Quaternion.Euler(0, -180, -60);
-        }
+        //if (linkedCards.All(card => card.isChanged == true) || linkedCards.Count == 0)
+        //{
+        //    if (!gameObject.gameObject.GetComponent<Card>().isVisible)
+        //    {
+        //        gameObject.GetComponent<Card>().isVisible = true;
+        //        gameObject.transform.rotation = Quaternion.Euler(-120, 0, 180);
+        //    }
+        //}
     }
 }
