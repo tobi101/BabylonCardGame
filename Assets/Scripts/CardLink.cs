@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class CardLink : MonoBehaviour
 {
-    public List<Card> linkedCards = new List<Card>();
+    public List<GameObject> linkedCards = new List<GameObject>();
 
     private void FixedUpdate()
     {
-        //if (linkedCards.All(card => card.isChanged == true) || linkedCards.Count == 0)
+        //if (linkedCards.All(card => card.GetComponent<Card>().isChanged == true) || linkedCards.Count == 0)
         //{
         //    if (!gameObject.gameObject.GetComponent<Card>().isVisible)
         //    {
