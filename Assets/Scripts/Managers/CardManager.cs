@@ -99,7 +99,7 @@ public class CardManager : Singleton<CardManager>
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         // Проверяем клик левой кнопкой мыши
         if (Input.GetMouseButtonDown(0))
